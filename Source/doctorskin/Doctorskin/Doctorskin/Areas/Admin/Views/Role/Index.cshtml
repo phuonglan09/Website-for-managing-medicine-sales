@@ -1,0 +1,72 @@
+﻿@using Doctors.Base.Models
+@model List<Role>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0">Nhóm quyền</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Nhóm quyền</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="card">
+        <div class="card-body">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <h5><a href="/Admin/RoleGroup/Index"><i class="fa fa-arrow-left"></i></a> <b>Quyền @ViewBag.RoleName</b></h5>
+                    <form id="frmRole" method="post">
+                        <table class="table table-hover table-striped table-fixed">
+                            <thead>
+                                <tr>
+                                    <th style="text-align: left" class="">Mô-đun   <br />&nbsp;</th>
+                                    <th style="text-align: center" class="">Thêm<br /> <input type="checkbox" id="chk_All_New" class="flat" /></th>
+                                    <th style="text-align: center" class="">Sửa<br /> <input type="checkbox" id="chk_All_Edit" class="flat" /></th>
+                                    <th style="text-align: center" class="">Xem<br /><input type="checkbox" id="chk_All_View" class="flat" /></th>
+                                    <th style="text-align: center" class="">Xóa<br /><input type="checkbox" id="chk_All_Delete" class="flat" /></th>
+                                    <th style="text-align: center" class="">Xác nhận<br /><input type="checkbox" id="chk_All_Confirm" class="flat" /></th>
+                                </tr>
+                            </thead>
+                            <tbody style="text-align:center">
+                                @if (Model.Count > 0)
+                                {
+                                    for (int i = 0; i < Model.Count; i++)
+                                    {
+                                        <tr>
+                                            <td align="left" class="">
+                                                @Html.HiddenFor(c => Model[i].Id)
+                                                @Html.HiddenFor(c => Model[i].ModuleId)
+                                                @Html.HiddenFor(c => Model[i].RoleGroupId)
+                                                <a href="javascript:void(0);" id="data-@Model[i].ModuleId" data-id="@Model[i].ModuleId" class="link_edit_controller" data-name="@Model[i].ModuleId">
+                                                    @Model[i].ModuleName
+                                                </a>
+                                            </td>
+                                            <td class=""> @Html.CheckBoxFor(c => Model[i].Add, new { @class = "Add form-check-input", data_id = "chk_Add_New_Item", data_extendId = Model[i].ModuleId, data_value = Model[i].Add })</td>
+                                            <td class=""> @Html.CheckBoxFor(c => Model[i].Edit, new { @class = "Edit form-check-input", data_id = "chk_Edit_Item", data_extendId = Model[i].ModuleId, data_value = Model[i].Edit })</td>
+                                            <td class=""> @Html.CheckBoxFor(c => Model[i].View, new { @class = "View form-check-input", data_id = "chk_View_Item", data_extendId = Model[i].ModuleId, data_value = Model[i].View }) </td>
+                                            <td class=""> @Html.CheckBoxFor(c => Model[i].Delete, new { @class = "Delete form-check-input", data_id = "chk_Delete_Item", data_extendId = Model[i].ModuleId, data_value = Model[i].Delete }) </td>
+                                            <td class=""> @Html.CheckBoxFor(c => Model[i].Confirm, new { @class = "Confirm form-check-input", data_id = "chk_Confirm_Item", data_extendId = Model[i].ModuleId, data_value = Model[i].Confirm }) </td>
+
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                        <button id="saveChangeData" type="button" class="btn btn-success mt-3"> Lưu </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,91 @@
+﻿@using Doctors.Base.Models
+@using Doctors.Base.Extension
+@model BlogDetail
+@{
+    ViewData["Title"] = "CreateOrEditBlog";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var title = string.Empty;
+    if (Model != null && Model.Id > 0)
+    {
+        title = "Chỉnh sửa bài viết";
+    }
+    else
+    {
+        title = "Thêm mới bài viết";
+    }
+    var lstBlogType = (List<BlogType>)ViewBag.ListBlogType;
+}
+<div class="row">
+    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+        <h4 class="mb-sm-0">@title</h4>
+    </div>
+</div>
+<div class="row project-wrapper">
+    <div class="card">
+        <div class="card-body">
+            <div class="table-card">
+                <input type="hidden" name="Id" id="ipIdHidden" value="@Model.Id" />
+                <div class="row py-3">
+                    <div class="col-md-12 form-group">
+                        <label><span class="text-danger">*</span>Thể loại bài viết</label>
+                        <select class="form-select  cpn-cls" id="sltBlogTypeId">
+                            <option value="0">--Chọn loại bài viết--</option>
+                            @if (lstBlogType != null && lstBlogType.Count > 0)
+                            {
+                                foreach (var item in lstBlogType)
+                                {
+                                    if (Model.BlogTypeId == item.Id)
+                                    {
+                                        <option value="@item.Id" selected>@item.Namebt</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Id">@item.Namebt</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <label><span class="text-danger">*</span>Tiêu đề</label>
+                        <input type="text" class="form-control" id="ipTitle" value="@Model.Title" placeholder="Tiêu đề ..." />
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <label><span class="text-danger">*</span>Mô tả ngắn</label>
+                        <input type="text" class="form-control" id="ipShortcontent" value="@Model.Shortcontent" placeholder="Mô tả ngắn ..." />
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <label>Ảnh</label>
+                        <input type="file" class="form-control" name="fileUpload" id="ipFileUpload" />
+                        @if (!string.IsNullOrEmpty(Model.Cardimg))
+                        {
+                            <label class="mt-2">
+                                <img src="/Uploads/Blogs/@Model.Cardimg" width="50" height="50" />
+                            </label>
+                        }
+                    </div>
+                    <div class="col-md-12 form-group mt-2">
+                        <label>Nội dung bài viết</label>
+                        <textarea class="form-control" id="TxtDescription">@Html.Raw(Model.Contentblog)</textarea>
+                    </div>
+                    <div class="col-md-12 mt-2">
+                        <div class="d-sm-flex align-items-center justify-content-between">
+                            <div></div>
+                            <div class="page-title-right">
+                                <button type="button" class="btn btn-primary" id="btnSubmitBlogDetail">Lưu</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- end card body -->
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        var editor = base.CreateCKEditor('TxtDescription');
+    </script>
+}
+
+

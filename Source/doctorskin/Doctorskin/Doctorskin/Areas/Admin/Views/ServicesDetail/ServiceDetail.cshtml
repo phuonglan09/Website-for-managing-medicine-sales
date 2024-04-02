@@ -1,0 +1,92 @@
+﻿@model Doctors.Base.Models.Service
+@{
+    ViewData["Title"] = "ServiceDetail";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<input type="hidden" value="@Model.Id" id="ipIdService" />
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0">Danh sách chi tiết dịch vụ <span class="text-danger">@Model.NameDt</span></h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Danh sách chi tiết dịch vụ</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Danh sách dịch vụ <span class="text-danger">@Model.NameDt</span></h4>
+                <div class="flex-shrink-0">
+                    <button type="button" id="btnCreateDetail" class="btn btn-warning btn-sm"><i class="bx bx-plus"></i> Thêm</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="live-preview pb-3">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Tìm kiếm</label>
+                            <input type="text" class="form-control" id="txtSearch" placeholder="Tên dịch vụ,..." />
+                        </div>
+                        <div class="col-md-1">
+                            <button type="button" class="btn btn-primary" style="margin-top:28px;" id="btnSeach"><i class="bx bx-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-centered align-middle" id="tblServiceDetail">
+                </table>
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div>
+<div id="modalsAddEditSvDetail" class="modal fade" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 overflow-hidden">
+            <div class="modal-header p-3">
+                <h4 class="card-title mb-0" id="titleModalDetail"></h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="">
+                    <input hidden name="Id" id="ipIdDetail">
+                    <div class="row">
+                        <div class="mb-3 col-md-12">
+                            <label class="form-label"> Tên dịch vụ</label>
+                            <input type="text" class="form-control" id="ipNameDetail">
+                        </div>
+                        <div class="mb-3 col-md-12">
+                            <label class="form-label"> Số lượng</label>
+                            <input type="number" class="form-control" id="ipAmountDetail">
+                        </div>
+                        <div class="mb-3 col-md-12">
+                            <label class="form-label"> Số tiền</label>
+                            <input type="number" class="form-control" id="ipPriceDetail">
+                        </div>
+                        <div class="mb-3 col-md-12">
+                            <label class="form-label"> Giới thiệu dịch vụ</label>
+                            <textarea class="form-control" rows="10" id="txtDescDetail"></textarea>
+                        </div>
+                        <div class="mb-3 col-md-12">
+                            <label class="form-label"> Ảnh</label>
+                            <input type="file" class="form-control" id="ipFileUpload">
+                            <label class="mt-2" id="lbImageDetail"></label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btnSubmitDetail" type="button" class="btn btn-primary">Lưu</button>
+                        <a href="javascript:void(0);" class="btn btn-link fw-medium" data-bs-dismiss="modal">Đóng</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

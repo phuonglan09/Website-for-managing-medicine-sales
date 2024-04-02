@@ -1,0 +1,264 @@
+﻿@using Doctors.Base.Models
+@{
+    ViewData["Title"] = "Home Page";
+    var lstCate = (List<Category>)ViewBag.ListCate;
+    var lstBanner = (List<Banner>)ViewBag.ListBannerHome;
+    var lstDoctor = (List<Doctor>)ViewBag.ListDotor;
+    var lstBlog = (List<BlogDetail>)ViewBag.ListBolg;
+}
+
+<!-- SLIDER AREA START (slider-3) -->
+<div class="ltn__slider-area ltn__slider-3---  section-bg-1--- mt-30">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <!-- CATEGORY-MENU-LIST START -->
+                <div class="ltn__category-menu-wrap">
+                    <div class="ltn__category-menu-title">
+                        <h2 class="section-bg-1 ltn__secondary-bg text-color-white">Danh mục</h2>
+                    </div>
+                    <div class="ltn__category-menu-toggle ltn__one-line-active">
+                        <ul>
+
+                            @if (lstCate != null && lstCate.Count > 0)
+                            {
+                                foreach (var item in lstCate)
+                                {
+                                    <li class="ltn__category-menu-item ltn__category-menu-drop">
+                                        <a href="/Category/Index?Id=@item.Id">@item.Namec </a>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <!-- END CATEGORY-MENU-LIST -->
+            </div>
+            <div class="col-lg-9">
+                <div class="ltn__slide-active-2 slick-slide-arrow-1 slick-slide-dots-1">
+                    <!-- ltn__slide-item -->
+                    @if (lstBanner != null && lstBanner.Count > 0)
+                    {
+                        foreach (var banner in lstBanner)
+                        {
+                            <div class="ltn__slide-item ltn__slide-item-10 section-bg-1 bg-image">
+                                <div class="ltn__slide-item-inner">
+                                    <img src="/Uploads/Banner/@banner.Image" />
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- SLIDER AREA END -->
+<!-- FEATURE AREA START ( Feature - 3) -->
+<div class="ltn__feature-area mt-35 mt--65---">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ltn__feature-item-box-wrap ltn__feature-item-box-wrap-2 ltn__border section-bg-1">
+                    <div class="ltn__feature-item ltn__feature-item-8">
+                        <div class="ltn__feature-icon">
+                            <img src="~/assets/img/icons/svg/8-trolley.svg" />
+                        </div>
+                        <div class="ltn__feature-info">
+                            <h4>Miễn phí ship</h4>
+                            <p>Với tất cả đơn hàng trên 1 triệu</p>
+                        </div>
+                    </div>
+                    <div class="ltn__feature-item ltn__feature-item-8">
+                        <div class="ltn__feature-icon">
+                            <img src="~/assets/img/icons/svg/9-money.svg" />
+                        </div>
+                        <div class="ltn__feature-info">
+                            <h4>Được hoàn trả</h4>
+                            <p>Với đơn hàng mua dưới 15 ngày</p>
+                        </div>
+                    </div>
+                    <div class="ltn__feature-item ltn__feature-item-8">
+                        <div class="ltn__feature-icon">
+                            <img src="~/assets/img/icons/svg/10-credit-card.svg" />
+                        </div>
+                        <div class="ltn__feature-info">
+                            <h4>An toàn khi mua</h4>
+                            <p>Đảm bảo chất lượng</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ltn__product-tab-area ltn__product-gutter pt-115 pb-70">
+    <div class="container">
+        @if (lstCate != null && lstCate.Count > 0)
+        {
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title-area ltn__section-title-2--- text-center">
+                        <!-- <h6 class="section-subtitle ltn__secondary-color">// Cars</h6> -->
+                        <h1 class="section-title">Sản phẩm của chúng tôi</h1>
+                    </div>
+                    <div class="ltn__tab-menu ltn__tab-menu-2 ltn__tab-menu-top-right-- text-uppercase text-center">
+                        <div class="nav">
+                            <a class="active show" data-bs-toggle="tab" href="#liton_tab_@lstCate[0].Id">@lstCate[0].Namec</a>
+                            @foreach (var item in lstCate.Take(3).ToList())
+                            {
+                                if (item.Id != lstCate[0].Id)
+                                {
+                                    <a data-bs-toggle="tab" href="#liton_tab_@item.Id" class="">@item.Namec</a>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="liton_tab_@lstCate[0].Id">
+                            <div class="ltn__product-tab-content-inner">
+                                <div class="row ltn__tab-product-slider-one-active slick-arrow-1">
+                                    @await Component.InvokeAsync("ViewProduct", new { cateId = lstCate[0].Id })
+                                </div>
+                            </div>
+                        </div>
+                        @foreach (var items in lstCate.Take(3).ToList())
+                        {
+                            if (items.Id != lstCate[0].Id)
+                            {
+                                <div class="tab-pane fade" id="liton_tab_@items.Id">
+                                    <div class="ltn__product-tab-content-inner">
+                                        <div class="row ltn__tab-product-slider-one-active slick-arrow-1">
+                                            <!-- ltn__product-item -->
+                                @await Component.InvokeAsync("ViewProduct", new { cateId = items.Id })
+                                            <!--  -->
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<!-- PRODUCT AREA START (product-item-3) -->
+<div class="ltn__product-area ltn__product-gutter pt-115 pb-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title-area ltn__section-title-2 text-center">
+                    <h1 class="section-title">Sản phẩm bán chạy</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row ltn__tab-product-slider-one-active--- slick-arrow-1">
+            <!-- ltn__product-item -->
+            @await Component.InvokeAsync("ViewProductSelling")
+            <!--  -->
+        </div>
+    </div>
+</div>
+
+<div class="ltn__video-popup-area ltn__video-popup-margin">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ltn__video-bg-img ltn__video-popup-height-600 bg-overlay-black-10-- bg-image" data-bs-bg="/assets/img/bg/15.jpg">
+                    <a class="ltn__video-icon-2 ltn__video-icon-2-border border-radius-no" href="https://www.youtube.com/embed/Cr4LFOgRGeo?autoplay=1&amp;showinfo=0" data-rel="lightcase:myCollection">
+                        <i class="fa fa-play"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- VIDEO AREA END -->
+<!-- TESTIMONIAL AREA START (testimonial-4) -->
+@if (lstDoctor != null && lstDoctor.Count > 0)
+{
+    <div class="ltn__testimonial-area section-bg-1 pt-290 pb-70">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title-area ltn__section-title-2 text-center">
+                        <h1 class="section-title">Đội ngũ bác sĩ<span>.</span></h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row ltn__testimonial-slider-3-active slick-arrow-1 slick-arrow-1-inner">
+                @foreach (var doctor in lstDoctor)
+                {
+                    <div class="col-lg-12">
+                        <div class="ltn__testimonial-item ltn__testimonial-item-4">
+                            <div class="ltn__testimoni-img">
+                                <img src="/Uploads/Doctor/@doctor.AvaDoc" alt="#">
+                            </div>
+                            <div class="ltn__testimoni-info">
+                                <p>@Html.Raw(doctor.Infordoc) </p>
+                                <h4>@doctor.Namedoc</h4>
+                            </div>
+                            <div class="ltn__testimoni-bg-icon">
+                                <i class="far fa-comments"></i>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <!--  -->
+            </div>
+        </div>
+    </div>
+}
+
+<!-- TESTIMONIAL AREA END -->
+<!-- BLOG AREA START (blog-3) -->
+@if (lstBlog != null && lstBlog.Count > 0)
+{
+    <div class="ltn__blog-area pt-115 pb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title-area ltn__section-title-2--- text-center">
+                        <h1 class="section-title">Tin tức và bài viết</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row  ltn__blog-slider-one-active slick-arrow-1 ltn__blog-item-3-normal">
+                <!-- Blog Item -->
+                @foreach (var blog in lstBlog)
+                {
+                    <div class="col-lg-12">
+                        <div class="ltn__blog-item ltn__blog-item-3">
+                            <div class="ltn__blog-img">
+                                <a href="/Blog/Detail?Id=@blog.Id"><img src="/Uploads/Blogs/@blog.Cardimg" alt="#" width="370" height="260"></a>
+                            </div>
+                            <div class="ltn__blog-brief">
+                                <div class="ltn__blog-meta">
+                                    <ul>
+                                        <li class="ltn__blog-author">
+                                            <a href="javascript:void(0)"><i class="far fa-user"></i>by: Admin</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <h3 class="ltn__blog-title"><a href="/Blog/Detail?Id=@blog.Id">@blog.Title</a></h3>
+                                <div class="ltn__blog-meta-btn">
+                                    <div class="ltn__blog-meta">
+                                        <ul>
+                                            <li class="ltn__blog-date"><i class="far fa-calendar-alt"></i>@blog.DateUp.Value.ToString("dd/MM/yyyy")</li>
+                                        </ul>
+                                    </div>
+                                    <div class="ltn__blog-btn">
+                                        <a href="/Blog/Detail?Id=@blog.Id">Chi tiết</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <!--  -->
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,59 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor _httpContextAccessor;
+@{
+    var controller = _httpContextAccessor.HttpContext.Request.RouteValues["Controller"].ToString().ToLower();
+}
+<!doctype html>
+<html class="no-js" lang="zxx">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Pharmacity</title>
+    <meta name="robots" content="noindex, follow" />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link href="~/assets/css/font-icons.css" rel="stylesheet" />
+    <link href="~/assets/css/plugins.css" rel="stylesheet" />
+    <link href="~/assets/css/style.css" rel="stylesheet" />
+    <link href="~/assets/css/responsive.css" rel="stylesheet" />
+    <link href="~/admin/assets/css/toastr.min.css" rel="stylesheet" />
+</head>
+
+<body>
+<div class="body-wrapper">
+
+    @Html.Partial("_header")
+@*    @Html.Partial("_cart")*@
+
+    @RenderBody()
+   
+    <!-- FOOTER AREA START -->
+    @Html.Partial("_footer")
+    <!-- FOOTER AREA END -->
+
+</div>
+<!-- Body main wrapper end -->
+
+    <!-- preloader area start -->
+    <div class="preloader d-none" id="preloader">
+        <div class="preloader-inner">
+            <div class="spinner">
+                <div class="dot1"></div>
+                <div class="dot2"></div>
+            </div>
+        </div>
+    </div>
+    <!-- preloader area end -->
+
+    <!-- All JS Plugins -->
+    <script src="~/assets/js/plugins.js"></script>
+    <!-- Main JS -->
+    <script src="~/assets/js/main.js"></script>
+    <script src="~/admin/assets/js/toastr.min.js"></script>
+    <script src="~/assets/controller/base.js" asp-append-version="true"></script>
+    <script src="~/assets/controller/@(controller).js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+

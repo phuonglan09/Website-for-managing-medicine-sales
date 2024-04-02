@@ -1,0 +1,32 @@
+﻿@using Doctors.Base.Models
+@using System.Globalization
+@model List<Product>
+@if (Model != null && Model.Count > 0)
+{
+    foreach (var item in Model)
+    {
+        <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+            <div class="ltn__product-item ltn__product-item-3 text-center">
+                <div class="product-img">
+                    <a href="/Product/Detail?Id=@item.Id"><img src="/Uploads/Product/@item.Img" alt="#"></a>
+                    <div class="product-hover-action">
+                        <ul>
+                            <li>
+                                <a href="javascript:void(0)" title="Thêm giỏ hàng" onclick="base.addCart(@item.Id, 1)">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h2 class="product-title"><a href="/Product/Detail?Id=@item.Id">@item.Namep</a></h2>
+                    <div class="product-price">
+                        <span>@item.Newprice.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))</span>
+                        <del>@item.Oldprice.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))</del>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

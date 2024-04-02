@@ -1,0 +1,60 @@
+﻿@using Doctors.Base.Models;
+@model User
+@{
+    ViewData["Title"] = "Thông tin cá nhân";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="ltn__breadcrumb-area text-left bg-overlay-white-30 bg-image " data-bs-bg="/assets/img/bg/14.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ltn__breadcrumb-inner">
+                    <h1 class="page-title">Tài khoản</h1>
+                    <div class="ltn__breadcrumb-list">
+                        <ul>
+                            <li><a href="/"><span class="ltn__secondary-color"><i class="fas fa-home"></i></span> Trang chủ</a></li>
+                            <li>Thông tin cá nhân</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ltn__login-area pb-110">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title-area text-center">
+                    <h1 class="section-title">Thay đổi <br>Thông tin của bạn</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="account-login-inner">
+                    <form id="frmUser">
+                        <input type="text" name="Name" class="form-control" id="ipName" value="@Model.Name" placeholder="Họ và tên*">
+                        <select class="mb-2" name="Gender">
+                            @if (Model.Gender == "Male")
+                            {
+                                <option value="Male" selected>Nam</option>
+                                <option value="Female">Nữ</option>
+                            }else{
+                                <option value="Male">Nam</option>
+                                <option value="Female" selected>Nữ</option>
+                            }
+                        </select>
+                        <input type="text" class="form-control" value="@Model.Phone" name="Phone" placeholder="Số điện thoại *">
+                        <input type="date" class="form-control" name="Birth" value="@(Model.Birth != null ? Model.Birth.Value.ToString("yyyy-MM-dd") : "")">
+                        <div class="btn-wrapper">
+                            <button class="theme-btn-1 btn reverse-color btn-block" id="btnEditProfile" type="button">Lưu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

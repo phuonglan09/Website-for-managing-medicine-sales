@@ -1,0 +1,86 @@
+﻿@using Doctors.Base.Session
+@using System.Globalization
+@model List<CartObject>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    decimal totalPriceAll = (decimal)ViewBag.TotalPriceAll;
+}
+<!-- BREADCRUMB AREA START -->
+<div class="ltn__breadcrumb-area text-left bg-overlay-white-30 bg-image " data-bs-bg="/assets/img/bg/14.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ltn__breadcrumb-inner">
+                    <h1 class="page-title">Giỏ hàng</h1>
+                    <div class="ltn__breadcrumb-list">
+                        <ul>
+                            <li><a href="/"><span class="ltn__secondary-color"><i class="fas fa-home"></i></span> Trang chủ</a></li>
+                            <li>Giỏ hàng</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- BREADCRUMB AREA END -->
+<!-- SHOPING CART AREA START -->
+<div class="liton__shoping-cart-area mb-120">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                @if (Model != null && Model.Count > 0)
+                {
+                    <div class="shoping-cart-inner">
+                        <div class="shoping-cart-table table-responsive">
+                            <table class="table">
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="cart-product-remove" onclick="cart.deleteCart(@item.ProductId)">x</td>
+                                            <td class="cart-product-image">
+                                                <a href="product-details.html"><img style="width: 100px; height:117px;" src="/Uploads/Product/@item.Images" alt="#"></a>
+                                            </td>
+                                            <td class="cart-product-info">
+                                                <h4><a href="/Product/Detail?Id=@item.ProductId">@item.ProductName</a></h4>
+                                            </td>
+                                            <td class="cart-product-price">@item.Price.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))</td>
+                                            <td class="cart-product-quantity quantity-block">
+                                                <div class="cart-plus-minus_1">
+                                                    <div class="dec qtybutton" data-value="-1" onclick="cart.adjustQuantity(this)">-</div>
+                                                    <input type="text" value="@item.Quantity" id="ipQuantitypro-@item.ProductId" onchange="cart.updateCart(@item.ProductId)" name="qtybutton" class="cart-plus-minus-box ipQtyButton">
+                                                    <div class="inc qtybutton" data-value="1" onclick="cart.adjustQuantity(this)">+</div>
+                                                </div>
+                                            </td>
+                                            <td class="cart-product-subtotal">@item.TotalPrice.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="shoping-cart-total mt-50">
+                            <h4>Tổng tiền</h4>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Tổng tiền</strong></td>
+                                        <td><strong>@totalPriceAll.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="btn-wrapper text-right">
+                                <a href="/CheckOut/Index" class="theme-btn-1 btn btn-effect-1">Thanh toán</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <p class="text-center">Không có sản phẩm trong giỏ hàng</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>

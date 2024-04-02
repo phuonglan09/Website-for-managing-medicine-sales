@@ -1,0 +1,161 @@
+﻿@using Doctors.Base.Models
+@using Doctors.Base.Extension
+@model Product
+@{
+    ViewData["Title"] = "CreateOrEdit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var title = string.Empty;
+    if (Model != null && Model.Id > 0)
+    {
+        title = "Chỉnh sửa sản phẩm";
+    }
+    else
+    {
+        title = "Thêm mới sản phẩm";
+    }
+    var lstCate = (List<Category>)ViewBag.ListCate;
+    var lstBranh = (List<Brand>)ViewBag.ListBrand;
+}
+<div class="row">
+    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+        <h4 class="mb-sm-0">@title</h4>
+    </div>
+</div>
+<div class="row project-wrapper">
+    <div class="card">
+        <div class="card-body">
+            <div class="table-card">
+                <input type="hidden" name="Id" id="ipIdHidden" value="@Model.Id" />
+                <div class="row py-3">
+                    <div class="col-md-6 form-group">
+                        <label><span class="text-danger">*</span>Tên sản phẩm</label>
+                        <input type="text" class="form-control" name="Namep" id="ipNamep" placeholder="Tên sản phẩm ..." value="@Model.Namep" />
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label><span class="text-danger">*</span>Loại sản phẩm</label>
+                        <select class="form-select  cpn-cls" id="sltCateId" name="CateId">
+                            <option value="0">--Chọn loại sản phẩm--</option>
+                            @if (lstCate != null && lstCate.Count > 0)
+                            {
+                                foreach (var item in lstCate)
+                                {
+                                    if (Model.CateId == item.Id)
+                                    {
+                                        <option value="@item.Id" selected>@item.Namec</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Id">@item.Namec</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label><span class="text-danger">*</span>Giá mới</label>
+                        <input type="number" class="form-control" id="ipNewPrice" value="@Model.Newprice" name="Newprice" placeholder="Giá mới ..." />
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label><span class="text-danger">*</span>Giá cũ</label>
+                        <input type="number" class="form-control" id="ipOldPrice" value="@Model.Oldprice" name="Oldprice" placeholder="Giá cũ ..." />
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Ảnh sản phẩm</label>
+                        <input type="file" class="form-control" name="fileUpload" id="ipFileUpload" />
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label><span class="text-danger">*</span>Nhãn hàng</label>
+                        <select class="form-control" name="Idbrand" id="sltBranchId">
+                            <option value="0">--Chọn nhóm sản phẩm--</option>
+                            @if (lstBranh != null && lstBranh.Count > 0)
+                            {
+                                foreach (var item in lstBranh)
+                                {
+                                    if (Model.Idbrand == item.Id)
+                                    {
+                                        <option value="@item.Id" selected>@item.Namebrand</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Id">@item.Namebrand</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label><span class="text-danger">*</span>Nhóm sản phẩm</label>
+                        <select class="form-control" id="sltStatep" name="statep">
+                            <option value="">--Chọn nhóm sản phẩm--</option>
+                            @foreach (var stap in Helper.ListStatep())
+                            {
+                                if (!string.IsNullOrEmpty(Model.Statep))
+                                {
+                                    if (Model.Statep.Equals(stap.Value))
+                                    {
+                                        <option value="@stap.Value" selected>@stap.DisplayName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@stap.Value">@stap.DisplayName</option>
+                                    }
+                                }
+                                else
+                                {
+                                    <option value="@stap.Value">@stap.DisplayName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label><span class="text-danger">*</span>Tình trạng</label>
+                        <select class="form-control" id="sltAvilability" name="avilability">
+                            <option value="">--Chọn tình trạng--</option>
+                            @foreach (var avi in Helper.ListAvilability())
+                            {
+                                if (!string.IsNullOrEmpty(Model.Avilability))
+                                {
+                                    if (Model.Avilability.Equals(avi.Value))
+                                    {
+                                        <option value="@avi.Value" selected>@avi.DisplayName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@avi.Value">@avi.DisplayName</option>
+                                    }
+                                }else{
+                                    <option value="@avi.Value">@avi.DisplayName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-12 form-group mt-2">
+                        <div class="form-check">
+                            <input class="form-check-input @(Model.Hide ? "checked" : "")" type="checkbox" id="ckHidden" name="Hide">
+                            <label class="form-check-label" for="ckHidden">
+                                Ẩn sản phẩm
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-group mt-2">
+                        <label>Mô tả sản phẩm</label>
+                        <textarea class="form-control" id="TxtDescription">@Html.Raw(Model.Descr)</textarea>
+                    </div>
+                    <div class="col-md-12 mt-2">
+                        <div class="d-sm-flex align-items-center justify-content-between">
+                            <div></div>
+                            <div class="page-title-right">
+                                <button type="button" class="btn btn-primary" id="btnCreateSubmit">Lưu</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- end card body -->
+    </div>
+</div>
+@section scripts{
+    <script>
+        var editor = base.CreateCKEditor('TxtDescription');
+    </script>
+}

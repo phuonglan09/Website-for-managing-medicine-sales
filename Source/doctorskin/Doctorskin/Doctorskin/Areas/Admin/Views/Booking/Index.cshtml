@@ -1,0 +1,88 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0">Danh sách đặt lịch</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Danh sách đặt lịch</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Danh sách đặt lịch</h4>
+                <div class="flex-shrink-0">
+                    <button type="button" id="btnCreate" class="btn btn-warning btn-sm"><i class="bx bx-plus"></i> Thêm</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="live-preview pb-3">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Tìm kiếm</label>
+                            <input type="text" class="form-control" id="txtSearch" placeholder="Mã sản phẩm, tên khách hàng,..." />
+                        </div>
+                        <div class="col-md-1">
+                            <button type="button" class="btn btn-primary" style="margin-top:28px;" id="btnSeach"><i class="bx bx-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-centered align-middle" id="tblBooking">
+                </table>
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div>
+<div id="modalsAddEdit" class="modal fade" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 overflow-hidden">
+            <div class="modal-header p-3">
+                <h4 class="card-title mb-0" id="titleModal"></h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="frmBooking">
+                    <input hidden name="Id" id="ipHiddenId">
+                    <div class="row">
+                        <div class="mb-3 col-md-12">
+                            <label class="form-label"> Họ và tên</label>
+                            <input type="text" class="form-control" name="Name" id="ipFullName">
+                        </div>
+                        <div class="mb-3 col-md-12">
+                            <label class="form-label"> Email</label>
+                            <input type="text" class="form-control" name="Email" id="ipEmail">
+                        </div>
+                        <div class="mb-3 col-md-12">
+                            <label class="form-label"> Số điện thoại</label>
+                            <input type="text" class="form-control" name="Phone" id="ipPhone">
+                        </div>
+                        <div class="mb-3 col-md-12">
+                            <label class="form-label"> Ghi chú</label>
+                            <textarea type="text" class="form-control" name="Require" id="ipRequire"></textarea>
+                        </div>
+                        <div class="mb-3 col-md-12">
+                            <label class="form-label"> Thời gian khám</label>
+                            <input type="datetime-local" class="form-control" name="Timebooking" id="ipTimebooking">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btnSubmit" type="button" class="btn btn-primary">Lưu</button>
+                        <a href="javascript:void(0);" class="btn btn-link fw-medium" data-bs-dismiss="modal">Đóng</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

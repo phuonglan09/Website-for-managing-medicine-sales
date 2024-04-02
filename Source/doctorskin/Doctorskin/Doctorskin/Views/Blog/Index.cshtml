@@ -1,0 +1,96 @@
+﻿@using Doctors.Base.Models
+@model List<BlogDetail>
+@{
+    ViewData["Title"] = "Danh sách tin tức";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var banner = (Banner)ViewBag.Banner;
+    string pathImage = string.Empty;
+    if (banner != null)
+    {
+        pathImage = "/Uploads/Banner/" + banner.Image;
+    }
+    else
+    {
+        pathImage = "/assets/img/bg/14.jpg";
+    }
+}
+<div class="ltn__breadcrumb-area text-left bg-overlay-white-30 bg-image " data-bs-bg="@pathImage">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ltn__breadcrumb-inner">
+                    <h1 class="page-title">Danh sách tin tức</h1>
+                    <div class="ltn__breadcrumb-list">
+                        <ul>
+                            <li><a href="/"><span class="ltn__secondary-color"><i class="fas fa-home"></i></span> Trang chủ</a></li>
+                            <li>Danh sách tin tức</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- BREADCRUMB AREA END -->
+<!-- BLOG AREA START -->
+<div class="ltn__blog-area ltn__blog-item-3-normal mb-100">
+    <div class="container">
+        <div class="row">
+            @if (Model != null && Model.Count > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <div class="col-lg-4 col-sm-6 col-12">
+                        <div class="ltn__blog-item ltn__blog-item-3">
+                            <div class="ltn__blog-img">
+                                <a href="/Blog/Detail?Id=@item.Id"><img src="/Uploads/Blogs/@item.Cardimg" style="width:370px; height:260px;" alt="#"></a>
+                            </div>
+                            <div class="ltn__blog-brief">
+                                <div class="ltn__blog-meta">
+                                    <ul>
+                                        <li class="ltn__blog-author">
+                                            <a href="javascript:void(0)"><i class="far fa-user"></i>by: Admin</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <h3 class="ltn__blog-title"><a href="/Blog/Detail?Id=@item.Id">@item.Title</a></h3>
+                                <div class="ltn__blog-meta-btn">
+                                    <div class="ltn__blog-meta">
+                                        <ul>
+                                            <li class="ltn__blog-date"><i class="far fa-calendar-alt"></i>@(item.DateUp != null ? item.DateUp.Value.ToString("dd/MM/yyyy") : "")</li>
+                                        </ul>
+                                    </div>
+                                    <div class="ltn__blog-btn">
+                                        <a href="/Blog/Detail?Id=@item.Id">Chi tiết</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }        
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ltn__pagination-area text-center">
+                    <div class="ltn__pagination">
+                        <ul>
+                            @if (ViewBag.CurrentPage > 1)
+                            {
+                                <li><a href="@Url.Action("Index", new { page = ViewBag.CurrentPage - 1 })"><i class="fas fa-angle-double-left"></i></a></li>
+                            }
+                            @for (var i = 1; i <= ViewBag.TotalPages; i++)
+                            {
+                                <li class="@(i == ViewBag.CurrentPage ? "active" : "")"><a href="@Url.Action("Index", new { page = i })">@i</a></li>
+                            }
+                            @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                            {
+                                <li><a href="@Url.Action("Index", new { page = ViewBag.CurrentPage + 1 })"><i class="fas fa-angle-double-right"></i></a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
